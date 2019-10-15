@@ -5,6 +5,21 @@
 // The outer scope can be a parent function, or the top level of the script.
 
 
+// has to be defined outside the outer function
+let var_saved = 0
+
+const outerFunction = () => {
+
+  // anonymous function
+  return () => var_saved++
+  
+  
+}
+
+console.log(outerFunction()())
+console.log(outerFunction()())
+console.log(outerFunction()())
+
 /* STRETCH PROBLEMS, Do not attempt until you have completed all previous tasks for today's project files */
 
 
