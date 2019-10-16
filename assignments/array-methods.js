@@ -58,28 +58,66 @@ const runners = [
 // ==== Challenge 1: Use .forEach() ====
 // The event director needs both the first and last names of each runner for their running bibs. Combine both the first and last names and populate a new array called `fullNames`. This array will contain just strings.
 let fullNames = [];
+// (parameter) => {code} only works in forEach not map
+runners.forEach((runner) => {fullNames.push(`${runner.first_name} ${runner.last_name}`)})
 console.log(fullNames);
 
 // ==== Challenge 2: Use .map() ====
 // The event director needs to have all the runners' first names in uppercase because the director BECAME DRUNK WITH POWER. Populate an array called `firstNamesAllCaps`. This array will contain just strings.
 let firstNamesAllCaps = [];
+firstNamesAllCaps = runners.map((runner) => runner.first_name.toUpperCase() )
 console.log(firstNamesAllCaps);
 
 // ==== Challenge 3: Use .filter() ====
 // The large shirts won't be available for the event due to an ordering issue. We need a filtered version of the runners array, containing only those runners with large sized shirts so they can choose a different size. This will be an array of objects.
 let runnersLargeSizeShirt = [];
+runnersLargeSizeShirt = runners.filter((runner) => runner.shirt_size === "L")
 console.log(runnersLargeSizeShirt);
 
 // ==== Challenge 4: Use .reduce() ====
 // The donations need to be tallied up and reported for tax purposes. Add up all the donations and save the total into a ticketPriceTotal variable.
 let ticketPriceTotal = 0;
-console.log(ticketPriceTotal);
+// reduce assumes the parameters are already at the correct dimention(number, not a dict)
+let x = runners.map((runner) => runner.donation)
+                .reduce((runner, next_one) => runner + next_one, 0)
+console.log(x);
 
 // ==== Challenge 5: Be Creative ====
 // Now that you have used .forEach(), .map(), .filter(), and .reduce().  I want you to think of potential problems you could solve given the data set and the 5k fun run theme.  Try to create and then solve 3 unique problems using one or many of the array methods listed above.
 
 // Problem 1
-
+// donations in the >= 200 range, get company name and runner first and last name
+let result = []
+result = runners.filter(runner => runner.donation >= 200)
+                .map(runner => `${runner.first_name} ${runner.last_name} ${runner.company_name}`)
+console.log(result)
 // Problem 2
+// reward certain donation ranges
+let reward_level_1 = []
+reward_level_1 = runners.filter(runner => runner.donation >= 200)
 
+let reward_level_2 = []
+reward_level_2 = runners.filter(runner => runner.donation < 100)
+
+let reward_result_level_1 = []
+reward_result_level_1 = reward_level_1.map(runner => "gold")
+
+let reward_result_level_2 = []
+reward_result_level_2 = reward_level_2.map(runner => "silver")
+
+
+let reward_results = [reward_result_level_1, reward_result_level_2]
+let reduced_results = []
+
+reduced_results = reward_results.reduce((a, b) => a.concat(b), [])
+console.log(reduced_results)
+// filter to 1 range, filter to another range, map the reward, reduce to an array
 // Problem 3
+// get the number of gold and silver rewards
+let gold = []
+gold = reduced_results.filter(reward => reward === "gold")
+
+let silver = []
+silver = reduced_results.filter(reward => reward === "silver")
+
+console.log(`number of gold rewards ${gold.length} ,number of silver rewards ${silver.length}`)
